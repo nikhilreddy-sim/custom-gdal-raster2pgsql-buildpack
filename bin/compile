@@ -10,12 +10,12 @@ mkdir -p $BUILD_DIR/bin
 mkdir -p $BUILD_DIR/lib
 mkdir -p $BUILD_DIR/include
 
-# Download and install GDAL
+# Download and install GDAL with 64-bit file I/O enabled
 echo "Installing GDAL 3.5.2..."
 wget -q https://download.osgeo.org/gdal/3.5.2/gdal-3.5.2.tar.gz
 tar -xzf gdal-3.5.2.tar.gz
 cd gdal-3.5.2
-./configure --prefix=$BUILD_DIR
+./configure --prefix=$BUILD_DIR --with-unix-stdio-64=yes
 make -j$(nproc) && make install
 cd ..
 
@@ -41,5 +41,6 @@ cd ..
 echo "Checking installations..."
 $BUILD_DIR/bin/gdalinfo --version
 $BUILD_DIR/bin/psql --version
+# $BUILD_DIR/bin/postgis_full_version
 
 echo "Buildpack setup complete."
