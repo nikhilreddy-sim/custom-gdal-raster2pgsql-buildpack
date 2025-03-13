@@ -5,20 +5,41 @@ set -e
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-# Update system
-echo "Updating system..."
-apt-get update -y && apt-get upgrade -y
+# Create working directories
+mkdir -p $BUILD_DIR/bin
+mkdir -p $BUILD_DIR/lib
+mkdir -p $BUILD_DIR/include
 
-# Install required dependencies
-echo "Installing dependencies..."
-apt-get install -y \
-  gdal-bin libgdal-dev \
-  postgresql-16 postgresql-client-16 \
-  postgis postgresql-16-postgis-3
+# Download and install GDAL
+echo "Installing GDAL 3.5.2..."
+wget -q https://download.osgeo.org/gdal/3.5.2/gdal-3.5.2.tar.gz
+tar -xzf gdal-3.5.2.tar.gz
+cd gdal-3.5.2
+./configure --prefix=$BUILD_DIR
+make -j$(nproc) && make install
+cd ..
+
+# Download and install PostgreSQL 16
+echo "Installing PostgreSQL 16..."
+wget -q https://ftp.postgresql.org/pub/source/v16.0/postgresql-16.0.tar.gz
+tar -xzf postgresql-16.0.tar.gz
+cd postgresql-16.0
+./configure --prefix=$BUILD_DIR
+make -j$(nproc) && make install
+cd ..
+
+# Download and install PostGIS 3.5
+echo "Installing PostGIS 3.5..."
+wget -q https://download.osgeo.org/postgis/source/postgis-3.5.0.tar.gz
+tar -xzf postgis-3.5.0.tar.gz
+cd postgis-3.5.0
+./configure --with-pgconfig=$BUILD_DIR/bin/pg_config --prefix=$BUILD_DIR
+make -j$(nproc) && make install
+cd ..
 
 # Verify installations
 echo "Checking installations..."
-gdalinfo --version
-psql --version
+$BUILD_DIR/bin/gdalinfo --version
+$BUILD_DIR/bin/psql --version
 
 echo "Buildpack setup complete."
