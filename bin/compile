@@ -20,6 +20,5 @@ apt-get install -y \
 echo "Checking installations..."
 gdalinfo --version
 psql --version
-postgis_full_version
 
 echo "Buildpack setup complete."
