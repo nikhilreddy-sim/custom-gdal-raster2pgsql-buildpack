@@ -11,13 +11,13 @@ mkdir -p $BUILD_DIR/lib
 mkdir -p $BUILD_DIR/include
 
 # Download and install GDAL with 64-bit file I/O enabled
-echo "Installing GDAL 3.5.2..."
-wget -q https://download.osgeo.org/gdal/3.5.2/gdal-3.5.2.tar.gz
-tar -xzf gdal-3.5.2.tar.gz
-cd gdal-3.5.2
-./configure --prefix=$BUILD_DIR --with-unix-stdio-64=yes
-make -j$(nproc) && make install
-cd ..
+#echo "Installing GDAL 3.5.2..."
+#wget -q https://download.osgeo.org/gdal/3.5.2/gdal-3.5.2.tar.gz
+#tar -xzf gdal-3.5.2.tar.gz
+#cd gdal-3.5.2
+#./configure --prefix=$BUILD_DIR --with-unix-stdio-64=yes
+#make -j$(nproc) && make install
+#cd ..
 
 # Download and install PostgreSQL 16
 echo "Installing PostgreSQL 16..."
