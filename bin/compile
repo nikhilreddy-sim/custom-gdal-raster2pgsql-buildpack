@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+# Update system
+echo "Updating system..."
+apt-get update -y && apt-get upgrade -y
+
+# Install required dependencies
+echo "Installing dependencies..."
+apt-get install -y \
+  gdal-bin libgdal-dev \
+  postgresql-16 postgresql-client-16 \
+  postgis postgresql-16-postgis-3
+
+# Verify installations
+echo "Checking installations..."
+gdalinfo --version
+psql --version
+postgis_full_version
+
+echo "Buildpack setup complete."
