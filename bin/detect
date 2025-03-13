@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Always return success to apply this buildpack
+echo "Custom GDAL & PostGIS buildpack detected"
+exit 0

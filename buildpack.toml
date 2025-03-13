@@ -1,0 +1,10 @@
+api = "0.6"
+
+[buildpack]
+id = "custom/gdal-postgis-buildpack"
+version = "1.0.0"
+name = "Custom GDAL & PostGIS Buildpack"
+description = "A buildpack to install GDAL, PostgreSQL 16, and PostGIS 3.5 on Ubuntu 24"
+
+[[stacks]]
+id = "heroku-24"
